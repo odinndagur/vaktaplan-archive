@@ -16,8 +16,8 @@ for i in range(0,tables.n, 2):
     # print(headers)
     df2 = df2.iloc[:,1:]
     headers = df2.iloc[0]
-    headers.to_csv(out + "headers" + str(i+1) + ".csv")
-    keys = df2.iloc[:,0]
+    # headers.to_csv(out + "headers" + str(i+1) + ".csv")
+    # keys = df2.iloc[:,0]
 
 
     df = df.iloc[2: , 1:]
@@ -27,19 +27,34 @@ for i in range(0,tables.n, 2):
 
     df.columns = headers
     df2.columns = headers
-    df.keys = keys
-    df2.keys = keys
+
+    df.dropna(how='all',axis=1)
+    df2.dropna(how='all',axis=1)
+
+    # df.index = keys
+    # df2.index = keys
 
     total = df.append(df2, ignore_index = True)
-    total.to_csv(out + "vaktaplan" + str(i) + ".csv")
+    total.to_csv(out + "vaktaplan" + str(int(i/2)) + ".csv")
     docs.append(total)
 
+# print("docs: ")
+# for i in range(len(docs)):
+    # print(docs[i])
+# print(total)
 first = docs[0]
-first.merge(docs[1],on='key',how='inner')
+first.merge(docs[1],how='left')
 # for i in range(len(docs)):
     # if(i != 0):
         # temp = docs[i].iloc[:,1:]
         # first.merge(temp)
+
+df = docs[len(docs)-1]
+# print("empty?")
+# empty = [col for col in df.columns if not df[col].empty]
+# print(empty)
+# df.drop(empty,axis=1,inplace=True)
+print(df)
 
 first.to_csv(out + "ALLT.csv")
 
