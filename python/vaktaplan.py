@@ -39,7 +39,3 @@ for i in range(len(docs)):
         first = pd.concat([first, temp], axis=1)
 
 first.to_csv(out + "ALLT.csv")
-
-
-
-def convertToOneBigSheet()
