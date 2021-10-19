@@ -3,11 +3,14 @@ import numpy as np
 import pandas as pd
 
 file = "../input/11okt10nov.pdf"
+# file ='/Users/odinndagur/Code/Github/vaktaplan/input/11okt10nov.pdf'
+
 
 tables = camelot.read_pdf(file,pages='1-end')
 
 docs = []
 out = "../output/"
+# out = '/Users/odinndagur/Code/Github/vaktaplan/output'
 for i in range(0,tables.n, 2):
     df = tables[i].df #even
     df2 = tables[i+1].df #odd
@@ -39,3 +42,17 @@ for i in range(len(docs)):
         first = pd.concat([first, temp], axis=1)
 
 first.to_csv(out + "ALLT.csv")
+
+del sys.modules["pdfminer"] 
+from minecart import pdfminer3k
+import minecart
+
+with open(file,"rb") as doc:
+    document = minecart.Document(doc)
+    print(document)
+    page = document.get_page(0)
+    for shape in page.shapes:
+        if shape.fill:
+            colors.add(shape.fill.color.as_rgb())
+for color in colors: 
+    print(color)
