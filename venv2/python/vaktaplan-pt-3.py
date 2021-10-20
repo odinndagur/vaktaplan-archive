@@ -80,8 +80,8 @@ for i in range(0, tables.n, 2):
             b = cell[10]
             if r > 0 or g > 0 or b > 0:
                 print(tablenumber,colnumber,rownumber)
-                print(tables[tablenumber].cells[colnumber][rownumber].text, "tables i+1")
-                print(df.iloc[colnumber-1][rownumber], "df i+1")
+                print(tables[tablenumber].cells[colnumber-2][rownumber].text, "tables i+1")
+                print(df.iloc[colnumber-2][rownumber], "df i+1")
                 # df.iloc[colnumber-2][rownumber-1] += str(int(r*255)) + str(int(g*255)) + str(int(g*255))
                 # print(tablenumber,colnumber,rownumber)
                 # print(df.iloc[colnumber-2][rownumber-1])
