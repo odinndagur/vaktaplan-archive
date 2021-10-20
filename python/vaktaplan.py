@@ -1,16 +1,19 @@
+import sys
+sys.path.append('/usr/local/lib/python3.9/alt/--ignore-installed')
+
 import camelot
 import numpy as np
 import pandas as pd
 
 file = "../input/11okt10nov.pdf"
-# file ='/Users/odinndagur/Code/Github/vaktaplan/input/11okt10nov.pdf'
+file ='/Users/odinndagur/Code/Github/vaktaplan/input/11okt10nov.pdf'
 
 
 tables = camelot.read_pdf(file,pages='1-end')
 
 docs = []
 out = "../output/"
-# out = '/Users/odinndagur/Code/Github/vaktaplan/output'
+out = '/Users/odinndagur/Code/Github/vaktaplan/output'
 for i in range(0,tables.n, 2):
     df = tables[i].df #even
     df2 = tables[i+1].df #odd

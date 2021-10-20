@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 import minecart
 
-file = "../input/11okt10nov.pdf"
-# file ='/Users/odinndagur/Code/Github/vaktaplan/input/11okt10nov.pdf'
+# file = "../input/11okt10nov.pdf"
+file ='/Users/odinndagur/Code/Github/vaktaplan/input/11okt10nov.pdf'
 
 
 colors = set()

@@ -1,3 +1,6 @@
+import subprocess
+subprocess.run(["source", "camelotenv/bin/activate"])
+
 import camelot
 import numpy as np
 import pandas as pd
