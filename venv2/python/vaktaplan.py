@@ -10,10 +10,13 @@ tables = camelot.read_pdf(file,pages='1-end')
 
 docs = []
 out = "../output/"
-out = '/Users/odinndagur/Code/Github/vaktaplan/output'
+out = '/Users/odinndagur/Code/Github/vaktaplan/output/'
 for i in range(0,tables.n, 2):
     df = tables[i].df #even
     df2 = tables[i+1].df #odd
+
+    df.to_csv(out + 'original_df' + str(i) + '.csv')
+    df2.to_csv(out + 'original_df' + str(i+1) + '.csv')
 
     df2 = df2.iloc[:,1:]
     df2.iloc[0,0] = "Starfsmaður"
@@ -30,6 +33,9 @@ for i in range(0,tables.n, 2):
 
     # df.dropna(how='all',axis=1)
     # df2.dropna(how='all',axis=1)
+
+    df.to_csv(out + 'df' + str(i) + '.csv')
+    df2.to_csv(out + 'df' + str(i+1) + '.csv')
 
     total = df.append(df2, ignore_index = True)
     total.to_csv(out + "vaktaplan" + str(int(i/2)) + ".csv")

@@ -1,6 +1,6 @@
 import minecart
 import json
-
+from stuff import *
 
 
 
@@ -9,7 +9,8 @@ colors = set()
 # temp = (cell.text,cell.x1,cell.y1,cell.x2,cell.y2,i,j,ii,r,g,b)
 global cellinfo
 with open('celldata1.json') as f:
-    cellinfo = [tuple(x) for x in json.load(f)]
+    cellinfo = [dict(x) for x in json.load(f)]
+# print(cellinfo)
 print(len(cellinfo))
 
 cellcolors = []
@@ -24,6 +25,8 @@ global s
 
 pagenumber = 0
 
+buffer = 1
+
 with open(file,"rb") as doc:
     document = minecart.Document(doc)
     # print(document)
@@ -31,18 +34,31 @@ with open(file,"rb") as doc:
         print("pagenumber: " + str(pagenumber))
         for shape in page.shapes:
             for cell in cellinfo:
-                box = (cell[1],cell[2],cell[3],cell[4])
+                left = cell['x1'] - buffer
+                bottom = cell['y1'] - buffer
+                right = cell['x2'] + buffer
+                top = cell['y2'] + buffer
+                box = (left,bottom,right,top)
+                # box = (0,0,600,600)
+                # box = (696.9200331584948, 486.8216768762596, 745.4800353705815, 506.09819469971785)
                 if shape.check_inside_bbox(box):
+                    # print("check")
                     r, g, b = shape.fill.color.as_rgb()
-                    ls = list(cell)
-                    ls[8] = r
-                    ls[9] = g
-                    ls[10] = b
+                    shift = getShiftByColor((r,g,b))
+                    if(len(shift) > 1):
+                        # print(cell['shifttype'] + 'pre')
+                        if(cell['table'] == pagenumber):
+                            cell['shifttype'] = shift
+                            # if pagenumber == 0: print(cell['text'],shift,cell['table'],cell['row'],cell['col'])
+                        # print(cell['shifttype'] + 'post')
+                    # ls[8] = r
+                    # ls[9] = g
+                    # ls[10] = b
                     # cell[8] = r
                     # cell[9] = g
                     # cell[10] = b
-                    cell = tuple(ls)
-                    print(cell[0])
+                    # cell = tuple(ls)
+                    # print(cell)
                     cellcolors.append(cell)
                     # i5 j6 ii7 r8 g9 b10
                 # if shape.fill:
@@ -62,18 +78,20 @@ with open(file,"rb") as doc:
                     # print(shape.fill.color.as_rgb())
                     # print(shape.get_bbox())
         pagenumber +=1
-    page = document.get_page(0)
-    for shape in page.shapes:
-        if shape.fill:
-            colors.add(shape.fill.color.as_rgb())
+    # page = document.get_page(0)
+    # for shape in page.shapes:
+    #     if shape.fill:
+    #         colors.add(shape.fill.color.as_rgb())
+# for cell in cellcolors:
+#     print(cell['shifttype'])
 with open('celldatawcolors.json', 'w') as f:
         json.dump(cellcolors,f)
-output = '['
-for color in colors: 
-    # print(color)
-    output +=('color' + '(' + str(color[0]) + ',' + str(color[1]) + ',' + str(color[2]) + '),')
-output = output[:-1]
-output += '];'
+# output = '['
+# for color in colors: 
+#     # print(color)
+#     output +=('color' + '(' + str(color[0]) + ',' + str(color[1]) + ',' + str(color[2]) + '),')
+# output = output[:-1]
+# output += '];'
 # box=(233,108,279,126)
 # box = list(box)
 # box[0] -=1
@@ -83,7 +101,7 @@ output += '];'
 # box = tuple(box)
 # sb = s.check_inside_bbox(box)
 # print(sb)
-print(output)
+# print(output)
 
 
 
