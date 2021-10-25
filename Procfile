@@ -1,1 +1,1 @@
-web gunicorn app:app
+web gunicorn venv2/python/app:app
