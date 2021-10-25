@@ -1,0 +1,6 @@
+Flask
+camelot-py[base]
+numpy
+pandas
+requests
+gunicorn

@@ -1,0 +1,1 @@
+webÞ gunicorn run:app
